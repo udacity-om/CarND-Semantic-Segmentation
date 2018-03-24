@@ -155,7 +155,7 @@ def run():
     #  https://www.cityscapes-dataset.com/
     
     epochs = 30
-    batches = 2
+    batches = 8
 
     with tf.Session() as sess:
         # Path to vgg model
