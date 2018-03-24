@@ -60,9 +60,9 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     :return: The Tensor for the last layer of output
     """
     # TODO: Implement function
-    layer7_1x1 = tf.layers.conv2d(vgg_layer7_out, num_classes, kernel_size = 1, strides=(1,1), padding='same', kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
-    layer4_1x1 = tf.layers.conv2d(vgg_layer4_out, num_classes, kernel_size = 1, strides=(1,1), padding='same', kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
-    layer3_1x1 = tf.layers.conv2d(vgg_layer3_out, num_classes, kernel_size = 1, strides=(1,1), padding='same', kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
+    layer7_1x1 = tf.layers.conv2d(vgg_layer7_out, num_classes, kernel_size = 1, strides=(1,1), padding='same', kernel_initializer = tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
+    layer4_1x1 = tf.layers.conv2d(vgg_layer4_out, num_classes, kernel_size = 1, strides=(1,1), padding='same', kernel_initializer = tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
+    layer3_1x1 = tf.layers.conv2d(vgg_layer3_out, num_classes, kernel_size = 1, strides=(1,1), padding='same', kernel_initializer = tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
     # scaling layer 4 and layer 3 output as mentioned in "Tips" section of Udacity page Project:Semantic Segmentation
     layer4_1x1_scaled = tf.multiply(layer4_1x1, 0.01)
     layer3_1x1_scaled = tf.multiply(layer3_1x1, 0.0001)
