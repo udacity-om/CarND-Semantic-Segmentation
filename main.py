@@ -165,7 +165,7 @@ def run():
         output_layer = layers(layer3_out, layer4_out, layer7_out, num_classes)
         label = tf.placeholder(tf.int32, shape=[None, None, None, num_classes])
         learning_rate = tf.placeholder(tf.float32)
-        logits, train_op, cross_entropy_loss = optimize(output_layer, label, learning_rate, num_classes, label)
+        logits, train_op, cross_entropy_loss = optimize(output_layer, label, learning_rate, num_classes)
         
         saver = tf.train.Saver()
         
