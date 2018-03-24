@@ -60,24 +60,24 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     :return: The Tensor for the last layer of output
     """
     # TODO: Implement function
-    layer7_1x1 = tf.layers.conv2d(vgg_layer7_out, num_classes, strides=(1,1), padding='same', kernal_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
-    layer4_1x1 = tf.layers.conv2d(vgg_layer4_out, num_classes, strides=(1,1), padding='same', kernal_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
-    layer3_1x1 = tf.layers.conv2d(vgg_layer3_out, num_classes, strides=(1,1), padding='same', kernal_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
+    layer7_1x1 = tf.layers.conv2d(vgg_layer7_out, num_classes, strides=(1,1), padding='same', kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
+    layer4_1x1 = tf.layers.conv2d(vgg_layer4_out, num_classes, strides=(1,1), padding='same', kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
+    layer3_1x1 = tf.layers.conv2d(vgg_layer3_out, num_classes, strides=(1,1), padding='same', kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
     
     # upsample convolved layer 7
-    upsampled_layer7 = tf.layers.conv2d_transpose(layer7_1x1, num_classes, 4, strides=(2,2), padding='same',kernal_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
+    upsampled_layer7 = tf.layers.conv2d_transpose(layer7_1x1, num_classes, 4, strides=(2,2), padding='same',kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
     
     # Add the upsampled layer 7 to convolved layer 4    
     combined_layer1 = tf.add(upsampled_layer7, layer4_1x1)
     
     # Up sample the combined layer1
-    upsampled_combined_layer1 = tf.layers.conv2d_transpose(combined_layer1, num_classes, 4, strides=(2,2), padding='same',kernal_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
+    upsampled_combined_layer1 = tf.layers.conv2d_transpose(combined_layer1, num_classes, 4, strides=(2,2), padding='same',kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
     
     # Add the upsampled combined layer1 to convolved layer 3   
     combined_layer2 = tf.add(upsampled_combined_layer1, layer3_1x1)
     
     # Up sample the combined layer2
-    upsampled_combined_layer2 = tf.layers.conv2d_transpose(combined_layer2, num_classes, 32, strides=(8,8), padding='same',kernal_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
+    upsampled_combined_layer2 = tf.layers.conv2d_transpose(combined_layer2, num_classes, 32, strides=(8,8), padding='same',kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
     
     return upsampled_combined_layer2
 tests.test_layers(layers)
