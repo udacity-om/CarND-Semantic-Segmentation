@@ -60,9 +60,9 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     :return: The Tensor for the last layer of output
     """
     # TODO: Implement function
-    layer7_1x1 = tf.layers.conv2d(vgg_layer7_out, num_classes, strides=(1,1), padding='same', kernal_regularizer = tf.contrib,layers.l2_regularizer(1e-3))
-    layer4_1x1 = tf.layers.conv2d(vgg_layer4_out, num_classes, strides=(1,1), padding='same', kernal_regularizer = tf.contrib,layers.l2_regularizer(1e-3))
-    layer3_1x1 = tf.layers.conv2d(vgg_layer3_out, num_classes, strides=(1,1), padding='same', kernal_regularizer = tf.contrib,layers.l2_regularizer(1e-3))
+    layer7_1x1 = tf.layers.conv2d(vgg_layer7_out, num_classes, strides=(1,1), padding='same', kernal_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
+    layer4_1x1 = tf.layers.conv2d(vgg_layer4_out, num_classes, strides=(1,1), padding='same', kernal_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
+    layer3_1x1 = tf.layers.conv2d(vgg_layer3_out, num_classes, strides=(1,1), padding='same', kernal_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
     
     # upsample convolved layer 7
     upsampled_layer7 = tf.layers.conv2d_transpose(layer7_1x1, num_classes, 4, strides=(2,2), padding='same',kernal_regularizer = tf.contrib,layers.l2_regularizer(1e-3))
