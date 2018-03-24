@@ -63,18 +63,21 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     layer7_1x1 = tf.layers.conv2d(vgg_layer7_out, num_classes, kernel_size = 1, strides=(1,1), padding='same', kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
     layer4_1x1 = tf.layers.conv2d(vgg_layer4_out, num_classes, kernel_size = 1, strides=(1,1), padding='same', kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
     layer3_1x1 = tf.layers.conv2d(vgg_layer3_out, num_classes, kernel_size = 1, strides=(1,1), padding='same', kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
+    # scaling layer 4 and layer 3 output as mentioned in "Tips" section of Udacity page Project:Semantic Segmentation
+    layer4_1x1_scaled = tf.multiply(layer4_1x1, 0.01)
+    layer3_1x1_scaled = tf.multiply(layer3_1x1, 0.0001)
     
     # upsample convolved layer 7
     upsampled_layer7 = tf.layers.conv2d_transpose(layer7_1x1, num_classes, kernel_size=4, strides=(2,2), padding='same',kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
     
     # Add the upsampled layer 7 to convolved layer 4    
-    combined_layer1 = tf.add(upsampled_layer7, layer4_1x1)
+    combined_layer1 = tf.add(upsampled_layer7, layer4_1x1_scaled)
     
     # Up sample the combined layer1
     upsampled_combined_layer1 = tf.layers.conv2d_transpose(combined_layer1, num_classes, kernel_size=4, strides=(2,2), padding='same',kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
     
     # Add the upsampled combined layer1 to convolved layer 3   
-    combined_layer2 = tf.add(upsampled_combined_layer1, layer3_1x1)
+    combined_layer2 = tf.add(upsampled_combined_layer1, layer3_1x1_scaled)
     
     # Up sample the combined layer2
     upsampled_combined_layer2 = tf.layers.conv2d_transpose(combined_layer2, num_classes, kernel_size=32, strides=(8,8), padding='same',kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
