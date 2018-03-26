@@ -1,3 +1,7 @@
+Ohio egion
+Spot instance with p2.xlarge
+
+
 #!/bin/bash
 cd data
 wget https://s3-us-west-1.amazonaws.com/udacity-selfdrivingcar/vgg.zip
@@ -7,3 +11,17 @@ wget http://kitti.is.tue.mpg.de/kitti/data_road.zip
 unzip data_road.zip
 rm data_road.zip
 pip install tqdm
+
+
+git pull origin master
+git push origin master
+
+
+ssh -i "C:\Project\Python\Udacity\Self_Driving_Car_Nano_Degree\demo_key_pair_on_g2_2x.pem" ubuntu@ec2-13-57-50-198.us-west-1.compute.amazonaws.com
+
+chmod 400 "C:\Project\Python\Udacity\Self_Driving_Car_Nano_Degree\Term3\demo.pem"
+
+ssh -i "C:\Project\Python\Udacity\Self_Driving_Car_Nano_Degree\Term3\demo.pem" ubuntu@ec2-18-221-226-100.us-east-2.compute.amazonaws.com
+
+
+Used filezilla to finally copy files from "runs" folder to local PC : http://angus.readthedocs.io/en/latest/amazon/transfer-files-between-instance.html
